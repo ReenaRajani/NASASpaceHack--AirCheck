@@ -21,10 +21,85 @@
          <img id="location" class="marker" src="images/map_marker.png">
          </div>
 
-         <button type="button" id="fixed-button" class="add-button"><img src="images/addcomment.svg" alt=""></button>
+         <button type="button" id="fixed-button" class="add-button" data-toggle="modal" data-target="#modalForm"><img src="images/addcomment.svg" alt=""></button>
   
 
     </div> <! -- Container --> 
+
+
+
+
+    <! -- Modal form  --> 
+
+    <div class="modal modal-transparent fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Symptom Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="symptom-type form-group">
+          <label> Symptoms </label>   
+          <div class='form-row-group'>
+            <div class="radio-inline">
+             <label> <input type="radio" name="symptom" value="coughing" class="form-control input-sm" > Coughing </label>
+            </div>
+
+            <div class="radio-inline">
+              <label> <input type="radio" name="symptom" value="itchy-eyes" class="form-control input-sm" > Itchy eyes </label>
+            </div>
+
+            <div class="radio-inline">
+              <label> <input type="radio" name="symptom" value="nasal-obstruction" class="form-control input-sm" > Nasal obstruction </label>
+            </div>
+          </div> <!-- form row group --> 
+
+          <div class='form-row-group'>
+             <div class="radio-inline">
+               <label> <input type="radio" name="symptom" value="shortness-of-breath" class="form-control input-sm" > Shortness of breath </label>
+             </div>
+
+             <div class="radio-inline">
+               <label> <input type="radio" name="symptom" value="sneezing" class="form-control input-sm" > Sneezing </label>
+             </div>
+
+             <div class="radio-inline">
+               <label> <input type="radio" name="symptom" value="wheezing" class="form-control input-sm" > Wheezing </label>
+             </div>
+          </div>   <!-- form-row-group -->        
+        </div> <!-- symptom-type form-group --> 
+
+        <div class="symptom-hazard-rating form-group">
+          <label> Rate the Symptom </label>   
+          <div class='form-row-group'>
+          <div class="symptom-hazard-radio radio-inline">
+            <label>
+              <input type="radio" name="rating" value="1" id="rating-mild" class="symptom-rating"/>
+              <img src="images/symptom-mild.svg" alt="mild"> Mild
+            </label>
+          </div> 
+          <div class="symptom-hazard-radio radio-inline">
+            <label>
+              <input type="radio" name="rating" value="2" id="rating-medium" class="symptom-rating"/>
+              <img src="images/symptom-medium.svg" alt="medium"> Medium
+            </label>
+          </div>
+          <div class="symptom-hazard-radio radio-inline">
+            <label>
+              <input type="radio" name="rating" value="3" id="rating-severe" class="symptom-rating"/>
+              <img src="images/symptom-severe.svg" alt="severe"> Severe
+            </label>
+          </div>
+          </div>   <!-- form-row-group -->  
+        </div> <!-- Symptom Hazard rating -->       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="submit-button center-block"> <img src="images/button_push.svg" alt="enter"></button>
+      </div>
+    </div>
+  </div>
+</div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>

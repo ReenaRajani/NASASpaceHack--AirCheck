@@ -29,8 +29,7 @@ $(document).on('ready', function(){
   }
 
   var layer = new ol.layer.Tile({
-    // source: new ol.source.MapQuest({layer: 'osm'})
-    source: new ol.source.OSM()
+    source: new ol.source.MapQuest({layer: 'sat'}) //osm
   });
     
   setMyLocation();

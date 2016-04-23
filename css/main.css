@@ -9,6 +9,17 @@
 	transform: translate(-10px, -20px);
 }
 
+input[type=radio] {
+	-webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+  margin-top: -0.4em;
+}
+
+label {
+	color:white;
+  font-style: italic;
+}
 
 .symptom-hazard-radio > label > input{ /* HIDE RADIO */
   visibility: hidden; /* Makes input not-clickable */
@@ -25,7 +36,33 @@
 #fixed-button{
 	position: fixed;
 	z-index: 1000;
-	bottom:0px;
-	right:0px;
-	background-color: red;
+	bottom:2em;
+	right: 3em;
+	background-color: transparent; /* #76ab92 */
+	border:none;
+	outline:#76ab92 ;
+}
+
+.modal-backdrop {
+	opacity: 0.8 !important;
+	background-color: transparentize(#777777, 0.27);
+	z-index: 1030;
+}
+
+.modal-transparent {
+	background: transparent;
+	color:white;
+}
+
+.modal-transparent .modal-content {
+  background: transparent;
+}
+
+.modal-backdrop.modal-backdrop-transparent {
+  background: #fff;
+}
+
+.modal-backdrop.modal-backdrop-transparent.in {
+  opacity: .9;
+  filter: alpha(opacity=90);
 }
