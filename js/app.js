@@ -1,10 +1,21 @@
 $(document).on('ready', function(){
-  var center = [151.1995516, -33.8842925];
+  var center = ol.proj.transform([151.1995516,  -33.8842925], 'EPSG:4326', 'EPSG:3857');
 
-   var view = new ol.View({
+  var layer = new ol.layer.Tile({
+    style: 'Road',
+    source: new ol.source.MapQuest({layer: 'osm'}) //osm
+  });
+
+  var view = new ol.View({
     center: center,
     zoom: 7
   });
+
+  var map = new ol.Map({
+          target: 'map',
+          layers: [layer],
+          view: view
+        });
 
   var setMyLocation = function(){
     console.log('inside setMyLocation');
@@ -27,10 +38,6 @@ $(document).on('ready', function(){
 
     navigator.geolocation.getCurrentPosition(success, error);
   }
-
-  var layer = new ol.layer.Tile({
-    source: new ol.source.MapQuest({layer: 'sat'}) //osm
-  });
     
   setMyLocation();
 
@@ -39,12 +46,6 @@ $(document).on('ready', function(){
           positioning: 'bottom-center'
         });
     console.log(center);
-
-    var map = new ol.Map({
-          target: 'map',
-          layers: [layer],
-          view: view
-        });
 
     var marker = new ol.Overlay({
         element: document.getElementById('location'),
