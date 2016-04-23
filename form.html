@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <title> Aircheck  </title>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://openlayers.org/en/v3.15.1/css/ol.css" type="text/css">
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="input-form">
+        <form role="form" >
+          <div class="symptom-type form-group">
+            <label> Symptoms </label>   
+            <div class='form-row-group'>
+              <div class="radio-inline">
+               <label> <input type="radio" name="symptom" value="coughing" class="form-control input-sm" > Coughing </label>
+              </div>
+
+              <div class="radio-inline">
+                <label> <input type="radio" name="symptom" value="itchy-eyes" class="form-control input-sm" > Itchy eyes </label>
+              </div>
+
+              <div class="radio-inline">
+                <label> <input type="radio" name="symptom" value="nasal-obstruction" class="form-control input-sm" > Nasal obstruction </label>
+              </div>
+            </div> <!-- form row group --> 
+
+            <div class='form-row-group'>
+               <div class="radio-inline">
+                 <label> <input type="radio" name="symptom" value="shortness-of-breath" class="form-control input-sm" > Shortness of breath </label>
+               </div>
+
+               <div class="radio-inline">
+                 <label> <input type="radio" name="symptom" value="sneezing" class="form-control input-sm" > Sneezing </label>
+               </div>
+
+               <div class="radio-inline">
+                 <label> <input type="radio" name="symptom" value="wheezing" class="form-control input-sm" > Wheezing </label>
+               </div>
+            </div>   <!-- form-row-group -->        
+          </div> <!-- symptom-type form-group --> 
+
+          <div class="symptom-hazard-rating form-group">
+            <label> Rate the Symptom </label>   
+            <div class='form-row-group'>
+            <div class="symptom-hazard-radio radio-inline">
+              <label>
+                <input type="radio" name="rating" value="1" id="rating-mild" class="symptom-rating"/>
+                <img src="images/symptom-mild.svg" alt="mild"> Mild
+              </label>
+            </div> 
+            <div class="symptom-hazard-radio radio-inline">
+              <label>
+                <input type="radio" name="rating" value="2" id="rating-medium" class="symptom-rating"/>
+                <img src="images/symptom-medium.svg" alt="medium"> Medium
+              </label>
+            </div>
+            <div class="symptom-hazard-radio radio-inline">
+              <label>
+                <input type="radio" name="rating" value="3" id="rating-severe" class="symptom-rating"/>
+                <img src="images/symptom-severe.svg" alt="severe"> Severe
+              </label>
+            </div>
+            </div>   <!-- form-row-group -->  
+          </div> <!-- Symptom Hazard rating -->       
+          <button type="button" class="submit-button"> Submit </button>
+        </form> <!-- form --> 
+      </div>
+  
+
+    </div> <! -- Container --> 
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="http://openlayers.org/en/v3.15.1/build/ol.js" type="text/javascript"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
+
+
+  

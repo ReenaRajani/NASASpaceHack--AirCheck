@@ -1,0 +1,31 @@
+/*.map {
+  height: 20em;
+  width: 100%;
+}*/
+
+.marker {
+  height: 1.5em;
+  width: 1.5em;
+	transform: translate(-10px, -20px);
+}
+
+
+.symptom-hazard-radio > label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+.symptom-hazard-radio > label > input + img{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid transparent;
+}
+.symptom-hazard-radio > label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid #f00;
+}
+
+#fixed-button{
+	position: fixed;
+	z-index: 1000;
+	bottom:0px;
+	right:0px;
+	background-color: red;
+}
