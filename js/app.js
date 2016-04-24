@@ -39,8 +39,9 @@ $(document).on('ready', function(){
     navigator.geolocation.getCurrentPosition(success, error);
   }
     
+  
   setMyLocation();
-
+  
   var overlay = new ol.Overlay({
           element: document.getElementById('overlay'),
           positioning: 'bottom-center'
@@ -82,6 +83,12 @@ $(document).on('ready', function(){
     var geolocation = geoFindMe(symptom, severity);
 
     });
+
+  map.on('moveend', function(event){
+    console.log('event type' + event.type );
+    var lonlat = ol.proj.transform(event.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
+    console.log('Recentering position ' + lonlat);
+  });
 
 });
 
