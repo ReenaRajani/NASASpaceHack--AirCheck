@@ -8,7 +8,7 @@ $(document).on('ready', function(){
 
   var view = new ol.View({
     center: center,
-    zoom: 7
+    zoom: 2
   });
 
   var map = new ol.Map({
@@ -16,6 +16,15 @@ $(document).on('ready', function(){
     layers: [layer],
     view: view
   });
+
+  // var marker1 = new ol.Overlay({
+  //   element: document.getElementById('location'),
+  //   positioning: 'center-center'
+  // });
+
+  // marker1.setPosition(ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]));
+  // map.addOverlay(marker1);
+
 
   var setMyLocation = function(){
     console.log('inside setMyLocation');
@@ -29,6 +38,16 @@ $(document).on('ready', function(){
       window.latitude = position.coords.latitude;
       console.log("long and lat", window.longitude, window.latitude);
       view.center = ol.proj.transform([window.longitude, window.latitude], 'EPSG:4326', 'EPSG:3857');
+      var marker = new ol.Overlay({
+      element: document.getElementById('location'),
+      positioning: 'center-center'
+    });
+
+      marker.setPosition(ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]));
+      map.addOverlay(marker);
+
+
+
     }
     function error(){
       console.log("Could not find your current coordinates");
@@ -78,6 +97,7 @@ $(document).on('ready', function(){
   });
 
   putData(map);
+
 });
 
 var putData = function (map) {
@@ -100,7 +120,6 @@ var geoFindMe = function( symptom ,severity){
       longitude: position.coords.longitude,
       latitude: position.coords.latitude
     }
-
     $.post("https://nasapi.herokuapp.com/events", res);
     console.log("position", position);
   };
@@ -112,12 +131,17 @@ var geoFindMe = function( symptom ,severity){
 };
 
 var makeMarker = function(obj, map) {
-  console.log('obj', obj, 'map', map)
+  console.log('obj', obj, 'map', map);
+  var image = document.createElement("IMG");
+  image.alt = "HI"
+  image.setAttribute('class', 'marker');
+  image.setAttribute('id',obj.id)
+  image.src="/images/pink_bubble.png";
+  $('#map-container').append(image);
+
   var marker = new ol.Overlay({
-    element: document.getElementById('location'),
-    positioning: 'center-center'
+    element: document.getElementById(obj.id)
   });
-  console.log('marker', marker)
   marker.setPosition(ol.proj.fromLonLat([obj.longitude, obj.latitude]));
   map.addOverlay(marker);
 }

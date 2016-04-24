@@ -4,8 +4,8 @@
 }*/
 
 .marker {
-  height: 1.5em;
-  width: 1.5em;
+  height: 2.5em;
+  width: 2.5em;
 	transform: translate(-10px, -20px);
 }
 
