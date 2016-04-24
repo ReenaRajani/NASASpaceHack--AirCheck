@@ -1,7 +1,32 @@
-/*.map {
-  height: 20em;
-  width: 100%;
-}*/
+.container {
+ background-color: #575151;
+}
+.header-data{
+	padding:none;
+	margin:none;
+}
+.main-heading {
+	font-size: 2.5em;
+	font-family: serif;
+	font-style: oblique;
+	color: rgb(173, 173, 160);
+}
+.sub-heading {
+  line-height: 0em;
+  padding-bottom: 1em;
+  margin-right: -8em;
+  font-style: oblique;
+  font-family: serif;
+  color: darkgrey;
+  font-weight: 500;
+  font-size: 1.5em;
+}
+
+.map-container {
+	width:100%;
+	height: 80%;
+	padding-top: 1em;
+}
 
 .marker {
   height: 2.5em;
@@ -66,6 +91,7 @@ label {
   opacity: .9;
   filter: alpha(opacity=90);
 }
+<<<<<<< HEAD
 .main-heading {
 	font-size: 1.5em;
 	font-family: serif;
@@ -83,3 +109,5 @@ label {
   color: darkgrey;
   font-weight: 500;
 }
+=======
+>>>>>>> master

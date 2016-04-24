@@ -1,5 +1,20 @@
 $(document).on('ready', function(){
   var center = ol.proj.transform([151.1995516,  -33.8842925], 'EPSG:4326', 'EPSG:3857');
+  var fetCoord;
+  var features = [];
+  var keys = Object.keys(fetCoord);
+
+  $.each(fetCoord, function(e, i){
+    var key = Object.keys(e)[0];
+    var values = e[key];
+    $.each(values, function(){
+      var latitude = this[Object.keys(this)[0]]
+      var longitude = this[Object.keys(this)[1]]
+      var coordinates = [longitude, latitude]
+      features.push(new ol.Feature(new ol.geom.Point(coordinates)));
+    })
+
+  });
 
   var layer = new ol.layer.Tile({
     style: 'Road',
@@ -11,7 +26,50 @@ $(document).on('ready', function(){
     zoom: 2
   });
 
+
+  var source = new ol.source.Vector({
+   features: features
+  });
+
+  var clusterSource = new ol.source.Cluster({
+    distance: 40,
+    source: source
+  });
+
+  var styleCache = {};
+
+  var clusters = new ol.layer.Vector({
+    source: clusterSource,
+    style: function(feature, resolution) {
+      var size = feature.get('features').length;
+      var style = styleCache[size];
+      if (!style) {
+        style = [new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 10,
+            stroke: new ol.style.Stroke({
+              color: 'red'
+            }),
+            fill: new ol.style.Fill({
+              color: 'blue'
+            })
+          }),
+          text: new ol.style.Text({
+            text: size.toString(),
+            fill: new ol.style.Fill({
+              color: '#fff'
+            })
+          })
+        })];
+        styleCache[size] = style;
+      }
+      return style;
+    }
+  });
+
+
   var map = new ol.Map({
+<<<<<<< HEAD
     target: 'map',
     layers: [layer],
     view: view
@@ -24,6 +82,13 @@ $(document).on('ready', function(){
 
   // marker1.setPosition(ol.proj.fromLonLat([position.coords.longitude, position.coords.latitude]));
   // map.addOverlay(marker1);
+
+=======
+          target: 'map',
+          layers: [layer, clusters],
+          view: view
+        });
+>>>>>>> master
 
 
   var setMyLocation = function(){
@@ -58,8 +123,9 @@ $(document).on('ready', function(){
     
   
   setMyLocation();
-  
+
   var overlay = new ol.Overlay({
+<<<<<<< HEAD
     element: document.getElementById('overlay'),
     positioning: 'bottom-center'
   });
@@ -79,7 +145,40 @@ $(document).on('ready', function(){
     // and add it to the map
     map.addOverlay(overlay);
   });
+=======
+          element: document.getElementById('overlay'),
+          positioning: 'bottom-center'
+        });
+    console.log(center);
 
+    var marker = new ol.Overlay({
+        element: document.getElementById('location'),
+        positioning: 'center-center'
+      });
+
+    marker.setPosition(ol.proj.fromLonLat([151.2070, -33.8675]));
+
+   map.addOverlay(marker);
+
+
+   map.on('click', function(event) {
+          // extract the spatial coordinate of the click event in map projection units
+          var coord = event.coordinate;
+          // transform it to decimal degrees
+          var degrees = ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
+          // format a human readable version
+          var hdms = ol.coordinate.toStringHDMS(degrees);
+          // update the overlay element's content
+          var element = overlay.getElement();
+          element.innerHTML = hdms;
+          // position the element (using the coordinate in the map's projection)
+          overlay.setPosition(coord);
+          // and add it to the map
+          map.addOverlay(overlay);
+        });
+>>>>>>> master
+
+ 
 
 
   $('.submit-button').on('click', function(){
@@ -93,7 +192,12 @@ $(document).on('ready', function(){
     console.log('event type' + event.type);
     var lonlat = ol.proj.transform(event.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
     console.log('Recentering position ' + lonlat);
+<<<<<<< HEAD
 
+=======
+    getFeatureCoordinates();
+  
+>>>>>>> master
   });
 
   putData(map);
@@ -130,6 +234,7 @@ var geoFindMe = function( symptom ,severity){
   navigator.geolocation.getCurrentPosition(success, error);
 };
 
+<<<<<<< HEAD
 var makeMarker = function(obj, map) {
   console.log('obj', obj, 'map', map);
   var image = document.createElement("IMG");
@@ -145,3 +250,24 @@ var makeMarker = function(obj, map) {
   marker.setPosition(ol.proj.fromLonLat([obj.longitude, obj.latitude]));
   map.addOverlay(marker);
 }
+=======
+
+var getFeatureCoordinates = function() {
+  console.log('getting coordinates');
+  var ret = {};
+  $.get('https://nasapi.herokuapp.com/events').done(function(res){
+      var points = res.result;
+      points.forEach(function(event) {
+       if (!ret[event.event]) {ret[event.event] = []; 
+       } 
+       else 
+       { ret[event.event].push([event.longitude, event.latitude])}
+     });
+  });
+  fetCoord = getFeatureCoordinates();
+  return ret;
+  
+}
+
+
+>>>>>>> master
