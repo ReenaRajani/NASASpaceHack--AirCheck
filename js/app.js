@@ -12,10 +12,10 @@ $(document).on('ready', function(){
   });
 
   var map = new ol.Map({
-          target: 'map',
-          layers: [layer],
-          view: view
-        });
+    target: 'map',
+    layers: [layer],
+    view: view
+  });
 
   var setMyLocation = function(){
     console.log('inside setMyLocation');
@@ -23,7 +23,6 @@ $(document).on('ready', function(){
        console.log('no geolocation');
        return;
     }
-
     function success(position){
       console.log(" position on success", position);
       window.longitude = position.coords.longitude;
@@ -35,7 +34,6 @@ $(document).on('ready', function(){
       console.log("Could not find your current coordinates");
       view.center = ol.proj.transform([window.longitude, window.latitude], 'EPSG:4326', 'EPSG:3857');
     }
-
     navigator.geolocation.getCurrentPosition(success, error);
   }
     
@@ -43,36 +41,25 @@ $(document).on('ready', function(){
   setMyLocation();
   
   var overlay = new ol.Overlay({
-          element: document.getElementById('overlay'),
-          positioning: 'bottom-center'
-        });
-    console.log(center);
-
-    var marker = new ol.Overlay({
-        element: document.getElementById('location'),
-        positioning: 'center-center'
-      });
-
-   marker.setPosition(ol.proj.fromLonLat([151.2070, -33.8675]));
-
-   map.addOverlay(marker);
-
+    element: document.getElementById('overlay'),
+    positioning: 'bottom-center'
+  });
 
   map.on('click', function(event) {
-          // extract the spatial coordinate of the click event in map projection units
-          var coord = event.coordinate;
-          // transform it to decimal degrees
-          var degrees = ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
-          // format a human readable version
-          var hdms = ol.coordinate.toStringHDMS(degrees);
-          // update the overlay element's content
-          var element = overlay.getElement();
-          element.innerHTML = hdms;
-          // position the element (using the coordinate in the map's projection)
-          overlay.setPosition(coord);
-          // and add it to the map
-          map.addOverlay(overlay);
-        });
+    // extract the spatial coordinate of the click event in map projection units
+    var coord = event.coordinate;
+    // transform it to decimal degrees
+    var degrees = ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
+    // format a human readable version
+    var hdms = ol.coordinate.toStringHDMS(degrees);
+    // update the overlay element's content
+    var element = overlay.getElement();
+    element.innerHTML = hdms;
+    // position the element (using the coordinate in the map's projection)
+    overlay.setPosition(coord);
+    // and add it to the map
+    map.addOverlay(overlay);
+  });
 
 
 
@@ -81,19 +68,27 @@ $(document).on('ready', function(){
     var symptom = document.querySelector('input[name="symptom"]:checked').value;
     var severity = document.querySelector('input[name="rating"]:checked').value;
     var geolocation = geoFindMe(symptom, severity);
-
-    });
-
-  map.on('moveend', function(event){
-    console.log('event type' + event.type );
-    var lonlat = ol.proj.transform(event.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
-    console.log('Recentering position ' + lonlat);
   });
 
+  map.on('moveend', function(event){
+    console.log('event type' + event.type);
+    var lonlat = ol.proj.transform(event.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
+    console.log('Recentering position ' + lonlat);
+
+  });
+
+  putData(map);
 });
 
-var geoFindMe = function( symptom ,severity){
+var putData = function (map) {
+  $.get('https://nasapi.herokuapp.com/events').done(function(ret) {
+    ret.result.forEach(function(event) {
+      makeMarker(event, map);
+    })
+  })
+}
 
+var geoFindMe = function( symptom ,severity){
   if (!navigator.geolocation){
     console.log('no geolocation');
     return;
@@ -109,12 +104,20 @@ var geoFindMe = function( symptom ,severity){
     $.post("https://nasapi.herokuapp.com/events", res);
     console.log("position", position);
   };
-
   function error() {
     console.log("Unable to retrieve your location");
   };
   console.log('locating');
   navigator.geolocation.getCurrentPosition(success, error);
-
 };
 
+var makeMarker = function(obj, map) {
+  console.log('obj', obj, 'map', map)
+  var marker = new ol.Overlay({
+    element: document.getElementById('location'),
+    positioning: 'center-center'
+  });
+  console.log('marker', marker)
+  marker.setPosition(ol.proj.fromLonLat([obj.longitude, obj.latitude]));
+  map.addOverlay(marker);
+}
