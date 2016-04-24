@@ -1,20 +1,19 @@
 $(document).on('ready', function(){
   var center = ol.proj.transform([151.1995516,  -33.8842925], 'EPSG:4326', 'EPSG:3857');
-  var fetCoord = getFeatureCoordinates();
-
+  var fetCoord;
   var features = [];
   var keys = Object.keys(fetCoord);
 
   $.each(fetCoord, function(e, i){
     var key = Object.keys(e)[0];
     var values = e[key];
-
     $.each(values, function(){
       var latitude = this[Object.keys(this)[0]]
       var longitude = this[Object.keys(this)[1]]
       var coordinates = [longitude, latitude]
-      features[i] = new ol.Feature(new ol.geom.Point(coordinates));
+      features.push(new ol.Feature(new ol.geom.Point(coordinates)));
     })
+
   });
 
   var layer = new ol.layer.Tile({
@@ -193,7 +192,9 @@ var getFeatureCoordinates = function() {
        { ret[event.event].push([event.longitude, event.latitude])}
      });
   });
+  fetCoord = getFeatureCoordinates();
   return ret;
+  
 }
 
 
