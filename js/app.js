@@ -136,7 +136,7 @@ var makeMarker = function(obj, map) {
   image.alt = "HI"
   image.setAttribute('class', 'marker');
   image.setAttribute('id',obj.id)
-  image.src="/images/pink_bubble.png";
+  image.src="https://github.com/reenarajani/NASASpaceHack--AirCheck/images/pink_bubble.png";
   $('#map-container').append(image);
 
   var marker = new ol.Overlay({
