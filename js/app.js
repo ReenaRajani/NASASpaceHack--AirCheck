@@ -86,6 +86,7 @@ $(document).on('ready', function(){
     console.log('button  clicked ')
     var symptom = document.querySelector('input[name="symptom"]:checked').value;
     var severity = document.querySelector('input[name="rating"]:checked').value;
+    $('#modalForm').modal('hide');
     var geolocation = geoFindMe(symptom, severity);
   });
 
@@ -136,7 +137,7 @@ var makeMarker = function(obj, map) {
   image.alt = "HI"
   image.setAttribute('class', 'marker');
   image.setAttribute('id',obj.id)
-  image.src="https://github.com/reenarajani/NASASpaceHack--AirCheck/images/pink_bubble.png";
+  image.src="images/pink_bubble.png";
   $('#map-container').append(image);
 
   var marker = new ol.Overlay({
